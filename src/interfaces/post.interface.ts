@@ -3,15 +3,11 @@ export interface User {
   email: string;
   password: string;
   name: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface Category {
   id: number;
   name: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface Post {
@@ -20,10 +16,13 @@ export interface Post {
   publicationDate: Date;
   contents: string;
   status: string;
-  categoryId: number;
-  userId: number;
-  createdAt: Date;
-  updatedAt: Date;
   user: User;
   category: Category;
+  comments: Comment[];
+}
+
+export interface Comment {
+  id: number;
+  contents: string;
+  user: User;
 }

@@ -76,6 +76,18 @@ class Post extends Model<IPost> {
     this.belongsTo(models.User, {
       as: 'user'
     });
+
+    this.hasMany(models.Comment, {
+      as: 'comments',
+      foreignKey: 'postId'
+    });
+
+    this.belongsToMany(models.Label, {
+      as: 'labels',
+      through: models.LabelPost,
+      foreignKey: 'postId',
+      otherKey: 'labelId'
+    });
   }
 
   static config(sequelize: Sequelize): InitOptions<Post> {

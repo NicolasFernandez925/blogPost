@@ -1,10 +1,8 @@
-import { Post as IPost } from '../../../interfaces/post.interface';
+import { Comment, Post as IPost } from '../../../interfaces/post.interface';
 import { IPostDTO } from 'dtos/interface/IPostDTO';
 import { Model } from 'Sequelize';
 import { Mapper } from 'interfaces/mapper';
-import { injectable } from 'inversify';
 
-@injectable()
 class PostMapper implements Mapper<Model<IPost>, IPostDTO> {
   toDto(data: Model<IPost>): IPostDTO {
     return {
@@ -19,7 +17,17 @@ class PostMapper implements Mapper<Model<IPost>, IPostDTO> {
       },
       category: {
         name: data.dataValues.category.name
-      }
+      },
+      comments: data.dataValues.comments.map((comment) => {
+        return {
+          id: comment.id,
+          contents: comment.contents,
+          user: {
+            email: comment.user.email,
+            name: comment.user.name
+          }
+        };
+      }) as Comment[]
     };
   }
 
