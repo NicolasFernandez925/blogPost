@@ -1,21 +1,14 @@
+import { createFactoryUser } from 'controllers/User/createFactoryUser';
 import { Router, Request, Response, NextFunction } from 'express';
-import { SingletonDatabase } from '../db/database';
 
 const router = Router();
 
-async function execute(req: Request, res: Response, next: NextFunction): Promise<void> {
-  /*  const user = sqlz.models.findByPk(1); */
-  const models = SingletonDatabase.sequelize.models;
+router.get('/', (req: Request, res: Response, next: NextFunction) => {
+  createFactoryUser.getAll(req, res, next);
+});
 
-  try {
-    const user = await models.User.findAll();
-    /* throw new Error('Error to get user'); */
-    res.status(200).json(user);
-  } catch (error) {
-    next(error);
-  }
-}
-
-router.get('/', async (req: Request, res: Response, next: NextFunction) => await execute(req, res, next));
+router.get('/:id', (req: Request, res: Response, next: NextFunction) => {
+  createFactoryUser.findById(req, res, next);
+});
 
 export { router };

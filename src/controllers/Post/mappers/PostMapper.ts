@@ -1,5 +1,5 @@
-import { Comment, Post as IPost } from '../../../interfaces/post.interface';
-import { IPostDTO } from 'dtos/interface/IPostDTO';
+import { Post as IPost } from '../interfaces/post.interface';
+import { IPostDTO } from 'controllers/Post/dtos/interface/IPostDTO';
 import { Model } from 'Sequelize';
 import { Mapper } from 'interfaces/mapper';
 
@@ -12,26 +12,19 @@ class PostMapper implements Mapper<Model<IPost>, IPostDTO> {
       contents: data.dataValues.contents,
       status: data.dataValues.status,
       user: {
+        id: data.dataValues.user.id,
         email: data.dataValues.user.email,
         name: data.dataValues.user.name
       },
       category: {
         name: data.dataValues.category.name
       },
-      comments: data.dataValues.comments.map((comment) => {
-        return {
-          id: comment.id,
-          contents: comment.contents,
-          user: {
-            email: comment.user.email,
-            name: comment.user.name
-          }
-        };
-      }) as Comment[]
+      comments: data.dataValues.comments,
+      labels: data.dataValues.labels
     };
   }
 
-  arrayToDto(data: Array<Model<IPost>>): IPostDTO[] {
+  collectionOfDto(data: Array<Model<IPost>>): IPostDTO[] {
     return data.map((item) => {
       return this.toDto(item);
     });

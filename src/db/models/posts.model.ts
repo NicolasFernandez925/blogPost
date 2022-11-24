@@ -1,7 +1,7 @@
 import { Model, DataTypes, Sequelize, InitOptions } from 'Sequelize';
 import { CATEGORIES_TABLE } from './categories.model';
 import { USERS_TABLE } from './users.model';
-import { Post as IPost } from '../../interfaces/post.interface';
+import { Post as IPost } from '../../controllers/Post/interfaces/post.interface';
 
 const POSTS_TABLE = 'posts';
 
@@ -19,6 +19,7 @@ const PostsSchema = {
   publicationDate: {
     field: 'publication_date',
     allowNull: false,
+    defaultValue: DataTypes.NOW,
     type: DataTypes.DATE
   },
   contents: {

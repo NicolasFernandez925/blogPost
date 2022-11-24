@@ -1,3 +1,4 @@
+import { IUser } from 'controllers/User/interfaces/user.interface';
 import { Model, DataTypes, Sequelize, InitOptions } from 'Sequelize';
 
 const USERS_TABLE = 'users';
@@ -37,7 +38,7 @@ const UsersSchema = {
   }
 };
 
-class User extends Model {
+class User extends Model<IUser> {
   static associate(models: any): void {
     this.hasMany(models.Post, {
       as: 'post',

@@ -16,6 +16,10 @@ export class Server {
     this.app = express();
     this.port = process.env.PORT ?? 3001;
 
+    this.app.use(cors());
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+
     this.routes();
     this.middelwares();
 
@@ -34,9 +38,8 @@ export class Server {
   }
 
   private middelwares(): void {
-    this.app.use(express.json());
-    this.app.use(cors());
     this.app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
+      console.log(err);
       res.status(500);
       res.json({ message: err.message });
     });

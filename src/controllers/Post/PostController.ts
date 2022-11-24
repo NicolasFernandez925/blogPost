@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { PostMapper } from 'controllers/Post/mappers/MapperImple';
+import { PostMapper } from 'controllers/Post/mappers/PostMapper';
 import { BaseController } from '../BaseController';
-import { IPostDTO } from 'dtos/interface/IPostDTO';
-import { IPostService } from 'services/IPostService';
+import { IPostDTO } from 'controllers/Post/dtos/interface/IPostDTO';
+import { IPostService } from 'services/Post/IPostService';
 
 export class PostController extends BaseController {
   protected postService: IPostService;
@@ -16,12 +16,20 @@ export class PostController extends BaseController {
 
   async getAll(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      /* console.log(posts[0].dataValues); */
       const posts = await this.postService.getAll();
 
-      this.ok<IPostDTO[]>(res, this.mapper.arrayToDto(posts));
+      this.ok<IPostDTO[]>(res, this.mapper.collectionOfDto(posts));
     } catch (error) {
-      console.log(error);
+      next(error);
+    }
+  }
+
+  async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const post = await this.postService.create(req.body);
+
+      this.ok<IPostDTO>(res, this.mapper.toDto(post));
+    } catch (error) {
       next(error);
     }
   }

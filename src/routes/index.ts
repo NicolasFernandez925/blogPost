@@ -17,7 +17,7 @@ readdirSync(PATH_ROUTER).forEach((fileName: string): void => {
   if (cleanName !== 'index') {
     import(`./${cleanName}`)
       .then((moduleRouter) => {
-        router.use(`/api/${cleanName}`, moduleRouter.router);
+        router.use(`/api/v1/${cleanName}`, moduleRouter.router);
       })
       .catch((err) => console.log(err));
   }

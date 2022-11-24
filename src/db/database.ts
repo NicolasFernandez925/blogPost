@@ -30,8 +30,8 @@ class SingletonDatabase {
   }
 
   private setupModels(): void {
-    User.init(UsersSchema, User.config(SingletonDatabase.sequelize));
-    Category.init(CategoriesSchema, Category.config(SingletonDatabase.sequelize));
+    User.init<any, any>(UsersSchema, User.config(SingletonDatabase.sequelize));
+    Category.init<any, any>(CategoriesSchema, Category.config(SingletonDatabase.sequelize));
     Post.init<any, any>(PostsSchema, Post.config(SingletonDatabase.sequelize));
     Label.init<any, any>(LabelSchema, Label.config(SingletonDatabase.sequelize));
     LabelPost.init<any, any>(LabelsPostSchema, LabelPost.config(SingletonDatabase.sequelize));

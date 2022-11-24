@@ -1,9 +1,11 @@
 import { Model } from 'Sequelize';
-import { Post as IPost } from '../interfaces/post.interface';
+import { Post as IPost } from '../../controllers/Post/interfaces/post.interface';
+import { response } from './PostService';
 
 interface IPostService {
   getAll: () => Promise<Array<Model<IPost>>>;
   findById: (id: string) => Promise<Model<IPost> | null>;
+  create: (body: response) => Promise<Model<IPost>>;
 }
 
 export { IPostService };

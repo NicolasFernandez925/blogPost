@@ -1,12 +1,11 @@
-import { Model } from 'Sequelize';
+import { Comment } from 'db/models/comments.model';
 import { SingletonDatabase } from 'db/database';
 import { Category } from 'db/models/categories.model';
 import { User } from 'db/models/users.model';
-import { IPostService } from './IPostService';
-import { Post as IPost } from '../interfaces/post.interface';
-import { Comment } from 'db/models/comments.model';
+import { Model, Optional } from 'Sequelize';
+import { Post as IPost } from '../controllers/Post/interfaces/post.interface';
 
-export class PostService implements IPostService {
+export class PostRepository {
   protected models;
 
   constructor() {
@@ -31,6 +30,14 @@ export class PostService implements IPostService {
     return post;
   }
 
+  async create(post: Optional<any, string>): Promise<Model<IPost>> {
+    console.log(post);
+    const newPost = await this.models.Post.create(post, {
+      include: ['labels', 'comments']
+    });
+    return newPost;
+  }
+
   get relationships(): any {
     return [
       {
@@ -50,7 +57,8 @@ export class PostService implements IPostService {
             as: 'user'
           }
         ]
-      }
+      },
+      'labels'
     ];
   }
 }

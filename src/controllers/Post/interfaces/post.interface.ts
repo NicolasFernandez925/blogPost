@@ -19,6 +19,12 @@ export interface Post {
   user: User;
   category: Category;
   comments: Comment[];
+  labels: Label[];
+}
+
+export interface Label {
+  id: number;
+  name: string;
 }
 
 export interface Comment {
