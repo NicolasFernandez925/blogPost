@@ -4,9 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
-require("reflect-metadata");
+const path_1 = __importDefault(require("path"));
 const Server_1 = require("./config/Server/Server");
-dotenv_1.default.config();
+console.log(`NODE_ENV=${process.env.NODE_ENV}`);
+dotenv_1.default.config({
+    path: path_1.default.resolve(process.cwd(), `${process.env.NODE_ENV}.env`)
+});
 const initServer = new Server_1.Server();
 initServer.execute();
 //# sourceMappingURL=index.js.map

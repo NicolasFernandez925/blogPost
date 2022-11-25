@@ -1,6 +1,6 @@
-import { BaseController } from 'controllers/BaseController';
+import { BaseController } from '../BaseController';
 import { NextFunction, Response, Request } from 'express';
-import { IUserService } from 'services/User/IUserService';
+import { IUserService } from '../../services/User/IUserService';
 import { IUserDTO } from './dtos/IUserDTO';
 import { UserMapper } from './Mapper/UserMapper';
 

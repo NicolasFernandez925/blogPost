@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
-const BaseController_1 = require("controllers/BaseController");
+const BaseController_1 = require("../BaseController");
 class UserController extends BaseController_1.BaseController {
     constructor(service, mapper) {
         super();

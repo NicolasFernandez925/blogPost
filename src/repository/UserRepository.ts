@@ -1,6 +1,6 @@
 import { Model } from 'Sequelize';
 import { IUser } from 'controllers/User/interfaces/user.interface';
-import { User } from 'db/models/users.model';
+import { User } from '../db/models/users.model';
 
 export class UserRepository {
   async getAll(): Promise<Array<Model<IUser>>> {

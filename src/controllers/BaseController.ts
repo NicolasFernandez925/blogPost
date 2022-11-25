@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import HttpStatusCode from 'utils/HttpStatusCode';
+import HttpStatusCode from '../utils/HttpStatusCode';
 
 export class BaseController {
   ok<T>(res: Response, data?: T): void {

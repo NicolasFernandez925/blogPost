@@ -1,4 +1,4 @@
-import { createFactoryPost } from 'controllers/Post/createFactoryPost';
+import { createFactoryPost } from '../controllers/Post/createFactoryPost';
 import { Router } from 'express';
 
 const router = Router();

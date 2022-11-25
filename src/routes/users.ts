@@ -1,4 +1,4 @@
-import { createFactoryUser } from 'controllers/User/createFactoryUser';
+import { createFactoryUser } from '../controllers/User/createFactoryUser';
 import { Router, Request, Response, NextFunction } from 'express';
 
 const router = Router();

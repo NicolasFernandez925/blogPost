@@ -21,6 +21,7 @@ class Server {
     constructor() {
         var _a;
         this.app = (0, express_1.default)();
+        console.log(process.env.PORT);
         this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3001;
         this.app.use((0, cors_1.default)());
         this.app.use(express_1.default.json());

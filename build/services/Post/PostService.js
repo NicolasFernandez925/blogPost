@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostService = void 0;
-const database_1 = require("db/database");
+const database_1 = require("../../db/database");
 class PostService {
     constructor(repository) {
         this.models = database_1.SingletonDatabase.sequelize.models;
@@ -27,8 +27,8 @@ class PostService {
             const createPost = {
                 title: body.title,
                 contents: body.contents,
-                categoryId: body.categoryId,
-                userId: body.userId,
+                categoryId: body.category_id,
+                userId: body.user_id,
                 status: body.status,
                 comments: [],
                 labels: body.labels

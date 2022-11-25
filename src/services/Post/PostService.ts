@@ -1,5 +1,5 @@
 import { Model } from 'Sequelize';
-import { SingletonDatabase } from 'db/database';
+import { SingletonDatabase } from '../../db/database';
 import { IPostService } from './IPostService';
 import { Label, Post as IPost } from '../../controllers/Post/interfaces/post.interface';
 import { PostRepository } from '../../repository/PostRepository';

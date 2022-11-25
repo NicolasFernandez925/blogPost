@@ -14,6 +14,8 @@ export class Server {
 
   constructor() {
     this.app = express();
+    console.log(process.env.PORT);
+
     this.port = process.env.PORT ?? 3001;
 
     this.app.use(cors());

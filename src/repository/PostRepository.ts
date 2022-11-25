@@ -1,7 +1,7 @@
-import { Comment } from 'db/models/comments.model';
-import { SingletonDatabase } from 'db/database';
-import { Category } from 'db/models/categories.model';
-import { User } from 'db/models/users.model';
+import { Comment } from '../db/models/comments.model';
+import { SingletonDatabase } from '../db/database';
+import { Category } from '../db/models/categories.model';
+import { User } from '../db/models/users.model';
 import { Model, Optional } from 'Sequelize';
 import { Post as IPost } from '../controllers/Post/interfaces/post.interface';
 

@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostRepository = void 0;
-const comments_model_1 = require("db/models/comments.model");
-const database_1 = require("db/database");
-const categories_model_1 = require("db/models/categories.model");
-const users_model_1 = require("db/models/users.model");
+const comments_model_1 = require("../db/models/comments.model");
+const database_1 = require("../db/database");
+const categories_model_1 = require("../db/models/categories.model");
+const users_model_1 = require("../db/models/users.model");
 class PostRepository {
     constructor() {
         this.models = database_1.SingletonDatabase.sequelize.models;
@@ -39,11 +39,14 @@ class PostRepository {
     }
     create(post) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(post);
             const newPost = yield this.models.Post.create(post, {
-                include: ['labels', 'comments']
+                include: ['labels']
             });
-            return newPost;
+            const idPost = newPost.dataValues.id;
+            const postCreated = yield this.models.Post.findByPk(idPost, {
+                include: this.relationships
+            });
+            return postCreated;
         });
     }
     get relationships() {
