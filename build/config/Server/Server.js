@@ -22,6 +22,9 @@ class Server {
         var _a;
         this.app = (0, express_1.default)();
         this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3001;
+        this.app.use((0, cors_1.default)());
+        this.app.use(express_1.default.json());
+        this.app.use(express_1.default.urlencoded({ extended: true }));
         this.routes();
         this.middelwares();
         this.userNameDb = process.env.USERNAME_DB;
@@ -36,9 +39,8 @@ class Server {
         this.app.use(routes_1.router);
     }
     middelwares() {
-        this.app.use(express_1.default.json());
-        this.app.use((0, cors_1.default)());
         this.app.use((err, req, res, next) => {
+            console.log(err);
             res.status(500);
             res.json({ message: err.message });
         });

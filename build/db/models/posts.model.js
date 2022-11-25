@@ -20,6 +20,7 @@ const PostsSchema = {
     publicationDate: {
         field: 'publication_date',
         allowNull: false,
+        defaultValue: Sequelize_1.DataTypes.NOW,
         type: Sequelize_1.DataTypes.DATE
     },
     contents: {

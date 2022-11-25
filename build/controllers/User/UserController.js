@@ -9,30 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostController = void 0;
-const BaseController_1 = require("../BaseController");
-class PostController extends BaseController_1.BaseController {
-    constructor(postService, mapper) {
+exports.UserController = void 0;
+const BaseController_1 = require("controllers/BaseController");
+class UserController extends BaseController_1.BaseController {
+    constructor(service, mapper) {
         super();
+        this.service = service;
         this.mapper = mapper;
-        this.postService = postService;
     }
     getAll(_req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const posts = yield this.postService.getAll();
-                this.ok(res, this.mapper.collectionOfDto(posts));
-            }
-            catch (error) {
-                next(error);
-            }
-        });
-    }
-    create(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const post = yield this.postService.create(req.body);
-                this.ok(res, this.mapper.toDto(post));
+                const users = yield this.service.getAll();
+                this.ok(res, this.mapper.collectionOfDto(users));
             }
             catch (error) {
                 next(error);
@@ -41,13 +30,13 @@ class PostController extends BaseController_1.BaseController {
     }
     findById(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
             try {
-                const post = yield this.postService.findById(id);
-                if (post === null) {
-                    throw new Error('the post was not found ' + id);
+                const { id } = req.params;
+                const user = yield this.service.findById(id);
+                if (user === null) {
+                    throw new Error('the user was not found ');
                 }
-                this.ok(res, this.mapper.toDto(post));
+                this.ok(res, this.mapper.toDto(user));
             }
             catch (error) {
                 next(error);
@@ -55,5 +44,5 @@ class PostController extends BaseController_1.BaseController {
         });
     }
 }
-exports.PostController = PostController;
-//# sourceMappingURL=PostController.js.map
+exports.UserController = UserController;
+//# sourceMappingURL=UserController.js.map

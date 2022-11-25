@@ -8,24 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const Sequelize_1 = require("Sequelize");
-const posts_model_1 = require("../models/posts.model");
-const COLUMN = 'publicationDate';
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-    up(queryInterface) {
+    up(queryInterface, Sequelize) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield queryInterface.changeColumn(posts_model_1.POSTS_TABLE, COLUMN, {
-                defaultValue: Sequelize_1.DataTypes.NOW
-            });
+            /**
+             * Add altering commands here.
+             *
+             * Example:
+             * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+             */
         });
     },
-    down(queryInterface) {
+    down(queryInterface, Sequelize) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield queryInterface.changeColumn(posts_model_1.POSTS_TABLE, COLUMN, {
-                defaultValue: Sequelize_1.DataTypes.NOW
-            });
+            /**
+             * Add reverting commands here.
+             *
+             * Example:
+             * await queryInterface.dropTable('users');
+             */
         });
     }
 };
-//# sourceMappingURL=20221123155022-create-comments.js.map
+//# sourceMappingURL=20221125134912-change-column-post.js.map

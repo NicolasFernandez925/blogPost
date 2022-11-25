@@ -23,8 +23,9 @@ class SingletonDatabase {
         users_model_1.User.init(users_model_1.UsersSchema, users_model_1.User.config(SingletonDatabase.sequelize));
         categories_model_1.Category.init(categories_model_1.CategoriesSchema, categories_model_1.Category.config(SingletonDatabase.sequelize));
         posts_model_1.Post.init(posts_model_1.PostsSchema, posts_model_1.Post.config(SingletonDatabase.sequelize));
-        comments_model_1.Comment.init(comments_model_1.CommentsSchema, comments_model_1.Comment.config(SingletonDatabase.sequelize));
+        labels_model_1.Label.init(labels_model_1.LabelSchema, labels_model_1.Label.config(SingletonDatabase.sequelize));
         labels_posts_model_1.LabelPost.init(labels_posts_model_1.LabelsPostSchema, labels_posts_model_1.LabelPost.config(SingletonDatabase.sequelize));
+        comments_model_1.Comment.init(comments_model_1.CommentsSchema, comments_model_1.Comment.config(SingletonDatabase.sequelize));
         categories_model_1.Category.associate(SingletonDatabase.sequelize.models);
         posts_model_1.Post.associate(SingletonDatabase.sequelize.models);
         users_model_1.User.associate(SingletonDatabase.sequelize.models);

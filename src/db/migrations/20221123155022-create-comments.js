@@ -1,12 +1,19 @@
 'use strict';
-import { CommentsSchema, COMMENTS_TABLE } from '../models/comments.model';
+import { DataTypes } from 'Sequelize';
+import { POSTS_TABLE } from '../models/posts.model';
+
+const COLUMN = 'publicationDate';
 
 module.exports = {
   async up(queryInterface) {
-    await queryInterface.createTable(COMMENTS_TABLE, CommentsSchema);
+    await queryInterface.changeColumn(POSTS_TABLE, COLUMN, {
+      defaultValue: DataTypes.NOW
+    });
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable(COMMENTS_TABLE);
+    await queryInterface.changeColumn(POSTS_TABLE, COLUMN, {
+      defaultValue: DataTypes.NOW
+    });
   }
 };

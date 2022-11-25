@@ -62,7 +62,7 @@ class Comment extends Sequelize_1.Model {
         return {
             sequelize,
             tableName: COMMENTS_TABLE,
-            modelName: 'Comments',
+            modelName: 'Comment',
             timestamps: true
         };
     }

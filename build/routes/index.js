@@ -39,7 +39,7 @@ const cleanFileName = (fileName) => {
     const cleanName = cleanFileName(fileName);
     if (cleanName !== 'index') {
         (_a = `./${cleanName}`, Promise.resolve().then(() => __importStar(require(_a)))).then((moduleRouter) => {
-            router.use(`/api/${cleanName}`, moduleRouter.router);
+            router.use(`/api/v1/${cleanName}`, moduleRouter.router);
         })
             .catch((err) => console.log(err));
     }

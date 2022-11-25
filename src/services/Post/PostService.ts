@@ -8,8 +8,8 @@ export interface response {
   title: string;
   contents: string;
   status: string;
-  userId: number;
-  categoryId: number;
+  user_id: number;
+  category_id: number;
   labels: Label[];
 }
 
@@ -32,8 +32,8 @@ export class PostService implements IPostService {
     const createPost = {
       title: body.title,
       contents: body.contents,
-      categoryId: body.categoryId,
-      userId: body.userId,
+      categoryId: body.category_id,
+      userId: body.user_id,
       status: body.status,
       comments: [],
       labels: body.labels

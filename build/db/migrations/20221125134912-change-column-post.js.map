@@ -1,0 +1,1 @@
+{"version":3,"file":"20221125134912-change-column-post.js","sourceRoot":"","sources":["../../../src/db/migrations/20221125134912-change-column-post.js"],"names":[],"mappings":"AAAA,YAAY,CAAC;;;;;;;;;;AAEb,gDAAgD;AAChD,MAAM,CAAC,OAAO,GAAG;IACT,EAAE,CAAC,cAAc,EAAE,SAAS;;YAChC;;;;;eAKG;QACL,CAAC;KAAA;IAEK,IAAI,CAAC,cAAc,EAAE,SAAS;;YAClC;;;;;eAKG;QACL,CAAC;KAAA;CACF,CAAC"}

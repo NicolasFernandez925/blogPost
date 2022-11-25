@@ -31,11 +31,17 @@ export class PostRepository {
   }
 
   async create(post: Optional<any, string>): Promise<Model<IPost>> {
-    console.log(post);
     const newPost = await this.models.Post.create(post, {
-      include: ['labels', 'comments']
+      include: ['labels']
     });
-    return newPost;
+
+    const idPost = newPost.dataValues.id;
+
+    const postCreated = await this.models.Post.findByPk(idPost, {
+      include: this.relationships
+    });
+
+    return postCreated!;
   }
 
   get relationships(): any {
