@@ -9,7 +9,8 @@
     "dev": "cross-env NODE_ENV=development ts-node-dev -r tsconfig-paths/register src/index.ts",
     "lint": "eslint src/**/*.ts",
     "migrations:generate": "sequelize-cli migration:generate --name",
-    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:run:dev": "cross-env NODE_ENV=development sequelize-cli db:migrate --env development",
+    "migrations:run:prod": "cross-env NODE_ENV=production sequelize-cli db:migrate --env production",
     "migrations:revert": "sequelize-cli db:migrate:undo"
   },
   "devDependencies": {

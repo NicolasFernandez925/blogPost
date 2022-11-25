@@ -17,8 +17,23 @@ class PostMapper {
             category: {
                 name: data.dataValues.category.name
             },
-            comments: data.dataValues.comments,
-            labels: data.dataValues.labels
+            comments: data.dataValues.comments.map((comment) => {
+                return {
+                    id: comment.id,
+                    contents: comment.contents,
+                    user: {
+                        id: comment.user.id,
+                        email: comment.user.email,
+                        name: comment.user.name
+                    }
+                };
+            }),
+            labels: data.dataValues.labels.map((label) => {
+                return {
+                    id: label.id,
+                    name: label.name
+                };
+            })
         };
     }
     collectionOfDto(data) {
