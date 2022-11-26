@@ -1,5 +1,5 @@
-import { createFactoryPost } from '../controllers/Post/createFactoryPost';
 import { Router } from 'express';
+import { createFactoryPost } from '../controllers/Post/createFactoryPost';
 
 const router = Router();
 
