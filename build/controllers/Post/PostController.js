@@ -30,8 +30,9 @@ class PostController extends BaseController_1.BaseController {
     }
     create(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
+            const _req = req;
             try {
-                const post = yield this.postService.create(req.body);
+                const post = yield this.postService.create(req.body, _req.user);
                 this.ok(res, this.mapper.toDto(post));
             }
             catch (error) {

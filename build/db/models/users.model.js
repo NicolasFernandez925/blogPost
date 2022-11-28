@@ -18,7 +18,7 @@ const UsersSchema = {
     },
     password: {
         allowNull: false,
-        type: Sequelize_1.DataTypes.STRING(45)
+        type: Sequelize_1.DataTypes.STRING(300)
     },
     name: {
         allowNull: false,

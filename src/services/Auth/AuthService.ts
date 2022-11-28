@@ -1,11 +1,27 @@
-import { AuthRepository } from 'repository/AuthRepository';
-import { IAuthService } from './IAuthService';
-
+import { Model } from 'Sequelize';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+import { AuthRepository } from '../../repository/AuthRepository';
+import { IAuthService } from './IAuthService';
+import { IUser } from '../../controllers/User/interfaces/user.interface';
+
 export interface IJwtPayload {
-  id: string;
+  id: string | number | undefined;
 }
+
+export interface IPropsBody {
+  email: string;
+  password: string;
+  name: string;
+}
+
+export interface IResponseRegister {
+  userCreated: Model<IUser>;
+  token: string;
+}
+
+export interface IUserWithoutName extends Omit<IUser, 'name'> {}
 
 export class AuthService implements IAuthService {
   private repository;
@@ -14,28 +30,51 @@ export class AuthService implements IAuthService {
     this.repository = repository;
   }
 
-  public async login(email: string, password: string): Promise<string> {
+  public async login({ email, password }: IUserWithoutName): Promise<string> {
     const user = await this.repository.getUserByEmail(email);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('User not found with email' + email);
     }
 
-    /* const isPasswordCorrect = await user.comparePassword(password); */
+    const isCorrectPassword = await bcrypt.compare(password, user.dataValues.password);
 
-    const isPasswordCorrect = password === user.password;
-
-    if (!isPasswordCorrect) {
+    if (!isCorrectPassword) {
       throw new Error('Password is incorrect');
     }
 
     const payload: IJwtPayload = {
-      id: user.id
+      id: user.dataValues.id
     };
 
     const token = this.signJwt(payload);
 
     return token;
+  }
+
+  public async register(user: IPropsBody): Promise<IResponseRegister> {
+    const checkUserExist = await this.repository.getUserByEmail(user.email);
+
+    if (checkUserExist) {
+      throw new Error('User already exist with email' + user.email);
+    }
+
+    const userWithPasswordEncrypt = this.encryptPasswordToUser(user);
+    const userCreated = await this.repository.register(userWithPasswordEncrypt);
+
+    const payload: IJwtPayload = {
+      id: userCreated.dataValues.id
+    };
+
+    const token = this.signJwt(payload);
+
+    return { userCreated, token };
+  }
+
+  private encryptPasswordToUser(user: IUser, saltRound = 10): IUser {
+    const encryptedPassword = bcrypt.hashSync(user.password, saltRound);
+    user.password = encryptedPassword;
+    return user;
   }
 
   private signJwt(payload: IJwtPayload, time = '1h', secretJwt = 'secret'): string {
@@ -47,7 +86,6 @@ export class AuthService implements IAuthService {
   }
 
   public async getUserByToken(token: string): Promise<any> {
-    console.log('verify', token);
     const user = jwt.verify(token, 'secret') as IJwtPayload;
 
     if (!user) {
@@ -56,8 +94,4 @@ export class AuthService implements IAuthService {
 
     return await this.repository.getUserByToken(user);
   }
-
-  /*   public login = async (email: string, password: string): Promise<any> => {};
-
-  public register = async (id: string): Promise<any> => {}; */
 }

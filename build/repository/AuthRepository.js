@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -9,17 +9,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const comments_model_1 = require("../models/comments.model");
-module.exports = {
-    up(queryInterface) {
+exports.AuthRepository = void 0;
+const users_model_1 = require("../db/models/users.model");
+class AuthRepository {
+    getUserByToken(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield queryInterface.createTable(comments_model_1.COMMENTS_TABLE, comments_model_1.CommentsSchema);
-        });
-    },
-    down(queryInterface) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield queryInterface.dropTable(comments_model_1.COMMENTS_TABLE);
+            const responseUser = yield users_model_1.User.findOne({
+                where: {
+                    id: user.id
+                }
+            });
+            return responseUser;
         });
     }
-};
-//# sourceMappingURL=20221123155022-create-comments.js.map
+    register(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const responseUser = yield users_model_1.User.create(user);
+            return responseUser;
+        });
+    }
+    getUserByEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const responseUser = yield users_model_1.User.findOne({
+                where: {
+                    email
+                }
+            });
+            return responseUser;
+        });
+    }
+}
+exports.AuthRepository = AuthRepository;
+//# sourceMappingURL=AuthRepository.js.map

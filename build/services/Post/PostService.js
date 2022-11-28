@@ -22,13 +22,13 @@ class PostService {
             return posts;
         });
     }
-    create(body) {
+    create(body, idUser) {
         return __awaiter(this, void 0, void 0, function* () {
             const createPost = {
                 title: body.title,
                 contents: body.contents,
                 categoryId: body.category_id,
-                userId: body.user_id,
+                userId: idUser,
                 status: body.status,
                 comments: [],
                 labels: body.labels

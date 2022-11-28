@@ -1,8 +1,8 @@
+import { Model, Optional } from 'Sequelize';
 import { Comment } from '../db/models/comments.model';
 import { SingletonDatabase } from '../db/database';
 import { Category } from '../db/models/categories.model';
 import { User } from '../db/models/users.model';
-import { Model, Optional } from 'Sequelize';
 import { Post as IPost } from '../controllers/Post/interfaces/post.interface';
 
 export class PostRepository {
@@ -32,7 +32,7 @@ export class PostRepository {
 
   async create(post: Optional<any, string>): Promise<Model<IPost>> {
     const newPost = await this.models.Post.create(post, {
-      include: ['labels']
+      include: ['labels', 'labels_posts']
     });
 
     const idPost = newPost.dataValues.id;

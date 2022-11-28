@@ -8,8 +8,6 @@ const path_1 = __importDefault(require("path"));
 dotenv_1.default.config({
     path: path_1.default.resolve(process.cwd(), `${process.env.NODE_ENV}.env`)
 });
-console.log(process.cwd());
-console.log(`NODE_ENV=${process.env.NODE_ENV}`);
 module.exports = {
     development: {
         username: process.env.USERNAME_DB,

@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { IAuthService } from 'services/Auth/IAuthService';
 import { IMiddleware } from './IMiddleware';
-import { AuthRepository } from '../repository/AuthRepository';
-import { AuthService } from 'services/Auth/AuthService';
 
 export interface ICustomRequest extends Request {
   user: number;
@@ -23,20 +21,16 @@ export class AuthMiddleware implements IMiddleware {
     const splitToken = token?.split(' ')[1];
 
     if (!splitToken) {
-      res.status(401).send('Unauthorized one');
+      res.status(401).send('Unauthorized token');
       return;
     }
 
     try {
-      const rep = new AuthRepository();
-      const ser = new AuthService(rep);
-      const user = await ser.getUserByToken(splitToken);
-
+      const user = await this.authService.getUserByToken(splitToken);
       _req.user = user.dataValues.id;
-
       next();
     } catch (e) {
-      res.status(401).send('Unauthorized two');
+      res.status(401).send('Unauthorized token');
     }
   }
 }

@@ -8,7 +8,6 @@ export interface response {
   title: string;
   contents: string;
   status: string;
-  user_id: number;
   category_id: number;
   labels: Label[];
 }
@@ -28,12 +27,12 @@ export class PostService implements IPostService {
     return posts;
   }
 
-  async create(body: response): Promise<Model<IPost>> {
+  async create(body: response, idUser: number): Promise<Model<IPost>> {
     const createPost = {
       title: body.title,
       contents: body.contents,
       categoryId: body.category_id,
-      userId: body.user_id,
+      userId: idUser,
       status: body.status,
       comments: [],
       labels: body.labels

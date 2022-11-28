@@ -3,6 +3,7 @@ import { PostMapper } from 'controllers/Post/mappers/PostMapper';
 import { BaseController } from '../BaseController';
 import { IPostDTO } from 'controllers/Post/dtos/interface/IPostDTO';
 import { IPostService } from 'services/Post/IPostService';
+import { ICustomRequest } from 'middelwares/AuthMiddelware';
 
 export class PostController extends BaseController {
   protected postService: IPostService;
@@ -25,8 +26,10 @@ export class PostController extends BaseController {
   }
 
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const _req = req as ICustomRequest;
+
     try {
-      const post = await this.postService.create(req.body);
+      const post = await this.postService.create(req.body, _req.user);
 
       this.ok<IPostDTO>(res, this.mapper.toDto(post));
     } catch (error) {

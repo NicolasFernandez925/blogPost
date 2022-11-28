@@ -17,7 +17,7 @@ const UsersSchema = {
   },
   password: {
     allowNull: false,
-    type: DataTypes.STRING(45)
+    type: DataTypes.STRING(300)
   },
 
   name: {

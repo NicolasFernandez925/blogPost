@@ -5,7 +5,7 @@ import { response } from './PostService';
 interface IPostService {
   getAll: () => Promise<Array<Model<IPost>>>;
   findById: (id: string) => Promise<Model<IPost> | null>;
-  create: (body: response) => Promise<Model<IPost>>;
+  create: (body: response, idUser: number) => Promise<Model<IPost>>;
 }
 
 export { IPostService };

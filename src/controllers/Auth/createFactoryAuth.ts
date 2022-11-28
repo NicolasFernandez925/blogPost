@@ -8,6 +8,7 @@ const mapper = new AuthMapper();
 const repository = new AuthRepository();
 const authService = new AuthService(repository);
 const authMiddelware = new AuthMiddleware(authService);
+
 const createFactoryAuth = new AuthController(mapper, authService);
 
 export { createFactoryAuth, authMiddelware };

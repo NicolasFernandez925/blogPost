@@ -1,10 +1,10 @@
-import { User } from 'db/models/users.model';
-import { IJwtPayload } from 'services/Auth/AuthService';
+import { Model } from 'Sequelize';
+import { IUser } from '../controllers/User/interfaces/user.interface';
+import { User } from '../db/models/users.model';
+import { IJwtPayload, IPropsBody } from '../services/Auth/AuthService';
 
 export class AuthRepository {
-  public async getUserByToken(user: IJwtPayload): Promise<any> {
-    console.log(user);
-
+  public async getUserByToken(user: IJwtPayload): Promise<Model<IUser> | null> {
     const responseUser = await User.findOne({
       where: {
         id: user.id
@@ -14,7 +14,13 @@ export class AuthRepository {
     return responseUser;
   }
 
-  public async getUserByEmail(email: string): Promise<any> {
+  public async register(user: IPropsBody): Promise<Model<IUser>> {
+    const responseUser = await User.create(user);
+
+    return responseUser;
+  }
+
+  public async getUserByEmail(email: string): Promise<Model<IUser> | null> {
     const responseUser = await User.findOne({
       where: {
         email
