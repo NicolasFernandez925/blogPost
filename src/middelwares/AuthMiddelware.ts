@@ -1,4 +1,7 @@
+import { IAuthServiceToken } from 'controllers/Auth/inyection/inyection.tokens';
 import { Request, Response, NextFunction } from 'express';
+import { Inject } from 'injection-js';
+
 import { IAuthService } from 'services/Auth/IAuthService';
 import { IMiddleware } from './IMiddleware';
 
@@ -7,9 +10,7 @@ export interface ICustomRequest extends Request {
 }
 
 export class AuthMiddleware implements IMiddleware {
-  private authService: IAuthService;
-
-  constructor(authService: IAuthService) {
+  constructor(@Inject(IAuthServiceToken) private authService: IAuthService) {
     this.authService = authService;
   }
 

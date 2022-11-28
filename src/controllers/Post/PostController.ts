@@ -4,12 +4,14 @@ import { BaseController } from '../BaseController';
 import { IPostDTO } from 'controllers/Post/dtos/interface/IPostDTO';
 import { IPostService } from 'services/Post/IPostService';
 import { ICustomRequest } from 'middelwares/AuthMiddelware';
+import { Inject } from 'injection-js';
+import { IPostServiceToken, PostMapperToken } from './inyection/inyection.tokens';
 
 export class PostController extends BaseController {
-  protected postService: IPostService;
-  protected mapper: PostMapper;
-
-  constructor(postService: IPostService, mapper: PostMapper) {
+  constructor(
+    @Inject(IPostServiceToken) private postService: IPostService,
+    @Inject(PostMapperToken) private mapper: PostMapper
+  ) {
     super();
     this.mapper = mapper;
     this.postService = postService;

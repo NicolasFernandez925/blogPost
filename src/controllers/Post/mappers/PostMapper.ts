@@ -2,7 +2,9 @@ import { Post as IPost } from '../interfaces/post.interface';
 import { IPostDTO } from 'controllers/Post/dtos/interface/IPostDTO';
 import { Model } from 'Sequelize';
 import { Mapper } from 'interfaces/mapper';
+import { Injectable } from 'injection-js';
 
+@Injectable()
 class PostMapper implements Mapper<Model<IPost>, IPostDTO> {
   toDto(data: Model<IPost>): IPostDTO {
     return {

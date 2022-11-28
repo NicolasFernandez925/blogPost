@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 import { AuthRepository } from '../../repository/AuthRepository';
 import { IAuthService } from './IAuthService';
 import { IUser } from '../../controllers/User/interfaces/user.interface';
+import { Inject, Injectable } from 'injection-js';
+import { AuthRepositoryToken } from 'controllers/Auth/inyection/inyection.tokens';
 
 export interface IJwtPayload {
   id: string | number | undefined;
@@ -23,10 +25,9 @@ export interface IResponseRegister {
 
 export interface IUserWithoutName extends Omit<IUser, 'name'> {}
 
+@Injectable()
 export class AuthService implements IAuthService {
-  private repository;
-
-  constructor(repository: AuthRepository) {
+  constructor(@Inject(AuthRepositoryToken) private repository: AuthRepository) {
     this.repository = repository;
   }
 

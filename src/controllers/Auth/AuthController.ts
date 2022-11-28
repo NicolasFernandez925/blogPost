@@ -1,14 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
+import { Inject } from 'injection-js';
+
 import { IResponseRegister } from 'services/Auth/AuthService';
 import { BaseController } from '../../controllers/BaseController';
 import { IAuthService } from '../../services/Auth/IAuthService';
+import { AuthMapperToken, IAuthServiceToken } from './inyection/inyection.tokens';
+
 import { AuthMapper } from './mappers/AuthMapper';
 
 export class AuthController extends BaseController {
-  private mapper: AuthMapper;
-  private service: IAuthService;
-
-  constructor(mapper: AuthMapper, service: IAuthService) {
+  constructor(
+    @Inject(AuthMapperToken) private mapper: AuthMapper,
+    @Inject(IAuthServiceToken) private service: IAuthService
+  ) {
     super();
     this.mapper = mapper;
     this.service = service;

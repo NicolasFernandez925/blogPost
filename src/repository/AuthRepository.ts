@@ -1,8 +1,10 @@
+import { Injectable } from 'injection-js';
 import { Model } from 'Sequelize';
 import { IUser } from '../controllers/User/interfaces/user.interface';
 import { User } from '../db/models/users.model';
 import { IJwtPayload, IPropsBody } from '../services/Auth/AuthService';
 
+@Injectable()
 export class AuthRepository {
   public async getUserByToken(user: IJwtPayload): Promise<Model<IUser> | null> {
     const responseUser = await User.findOne({

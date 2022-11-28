@@ -4,7 +4,9 @@ import { SingletonDatabase } from '../db/database';
 import { Category } from '../db/models/categories.model';
 import { User } from '../db/models/users.model';
 import { Post as IPost } from '../controllers/Post/interfaces/post.interface';
+import { Injectable } from 'injection-js';
 
+@Injectable()
 export class PostRepository {
   protected models;
 
@@ -32,7 +34,7 @@ export class PostRepository {
 
   async create(post: Optional<any, string>): Promise<Model<IPost>> {
     const newPost = await this.models.Post.create(post, {
-      include: ['labels', 'labels_posts']
+      include: ['labels']
     });
 
     const idPost = newPost.dataValues.id;

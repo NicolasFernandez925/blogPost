@@ -1,15 +1,14 @@
 import { Router } from 'express';
-
-import { createFactoryAuth } from '../controllers/Auth/createFactoryAuth';
+import { authController } from 'controllers/Auth/inyection';
 
 const router = Router();
 
 router.post('/register', (req, res, next) => {
-  createFactoryAuth.register(req, res, next);
+  authController.register(req, res, next);
 });
 
 router.post('/login', (req, res, next) => {
-  createFactoryAuth.login(req, res, next);
+  authController.login(req, res, next);
 });
 
 export { router };

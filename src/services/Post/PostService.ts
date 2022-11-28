@@ -3,6 +3,8 @@ import { SingletonDatabase } from '../../db/database';
 import { IPostService } from './IPostService';
 import { Label, Post as IPost } from '../../controllers/Post/interfaces/post.interface';
 import { PostRepository } from '../../repository/PostRepository';
+import { Inject, Injectable } from 'injection-js';
+import { PostRepositoryToken } from 'controllers/Post/inyection/inyection.tokens';
 
 export interface response {
   title: string;
@@ -12,11 +14,11 @@ export interface response {
   labels: Label[];
 }
 
+@Injectable()
 export class PostService implements IPostService {
   protected models;
-  protected repository: PostRepository;
 
-  constructor(repository: PostRepository) {
+  constructor(@Inject(PostRepositoryToken) private repository: PostRepository) {
     this.models = SingletonDatabase.sequelize.models;
     this.repository = repository;
   }
