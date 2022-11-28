@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { Inject } from 'injection-js';
-
 import { IResponseRegister } from 'services/Auth/AuthService';
 import { BaseController } from '../../controllers/BaseController';
 import { IAuthService } from '../../services/Auth/IAuthService';

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { postController } from 'controllers/Post/inyection';
-import { authMiddelware } from 'middelwares/inyection/auth.middelware';
+import { authMiddelware } from 'middelwares/auth/auth.middelware';
 
 const router = Router();
 

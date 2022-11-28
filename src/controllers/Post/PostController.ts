@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
+import { Inject } from 'injection-js';
 import { PostMapper } from 'controllers/Post/mappers/PostMapper';
 import { BaseController } from '../BaseController';
 import { IPostDTO } from 'controllers/Post/dtos/interface/IPostDTO';
 import { IPostService } from 'services/Post/IPostService';
-import { ICustomRequest } from 'middelwares/AuthMiddelware';
-import { Inject } from 'injection-js';
+import { ICustomRequest } from 'middelwares/auth/AuthMiddelware';
 import { IPostServiceToken, PostMapperToken } from './inyection/inyection.tokens';
 
 export class PostController extends BaseController {
@@ -44,12 +44,7 @@ export class PostController extends BaseController {
 
     try {
       const post = await this.postService.findById(id);
-
-      if (post === null) {
-        throw new Error('the post was not found ' + id);
-      }
-
-      this.ok<IPostDTO>(res, this.mapper.toDto(post));
+      this.ok<IPostDTO>(res, this.mapper.toDto(post!));
     } catch (error) {
       next(error);
     }

@@ -1,6 +1,6 @@
 import { AuthRepositoryToken, IAuthServiceToken } from 'controllers/Auth/inyection/inyection.tokens';
 import { ReflectiveInjector } from 'injection-js';
-import { AuthMiddleware } from 'middelwares/AuthMiddelware';
+import { AuthMiddleware } from 'middelwares/auth/AuthMiddelware';
 import { AuthRepository } from 'repository/AuthRepository';
 import { AuthService } from 'services/Auth/AuthService';
 

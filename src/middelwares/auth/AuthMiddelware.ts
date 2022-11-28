@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Inject } from 'injection-js';
 
 import { IAuthService } from 'services/Auth/IAuthService';
-import { IMiddleware } from './IMiddleware';
+import { IMiddleware } from '../IMiddleware';
 
 export interface ICustomRequest extends Request {
   user: number;

@@ -47,6 +47,11 @@ export class PostService implements IPostService {
 
   async findById(id: string): Promise<Model<IPost> | null> {
     const post = await this.repository.findById(id);
+
+    if (post === null) {
+      throw new Error('the post was not found ' + id);
+    }
+
     return post;
   }
 }
