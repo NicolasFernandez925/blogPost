@@ -6,6 +6,7 @@ import { IPostDTO } from 'controllers/Post/dtos/interface/IPostDTO';
 import { IPostService } from 'services/Post/IPostService';
 import { ICustomRequest } from 'middelwares/auth/AuthMiddelware';
 import { IPostServiceToken, PostMapperToken } from './inyection/inyection.tokens';
+import HttpStatusCode from 'utils/HttpStatusCode';
 
 export class PostController extends BaseController {
   constructor(
@@ -21,7 +22,7 @@ export class PostController extends BaseController {
     try {
       const posts = await this.postService.getAll();
 
-      this.ok<IPostDTO[]>(res, this.mapper.collectionOfDto(posts));
+      this.ok<IPostDTO[]>({ res, status: HttpStatusCode.OK, data: this.mapper.collectionOfDto(posts) });
     } catch (error) {
       next(error);
     }
@@ -33,7 +34,7 @@ export class PostController extends BaseController {
     try {
       const post = await this.postService.create(req.body, _req.user);
 
-      this.ok<IPostDTO>(res, this.mapper.toDto(post));
+      this.ok<IPostDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(post) });
     } catch (error) {
       next(error);
     }
@@ -44,7 +45,7 @@ export class PostController extends BaseController {
 
     try {
       const post = await this.postService.findById(id);
-      this.ok<IPostDTO>(res, this.mapper.toDto(post!));
+      this.ok<IPostDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(post!) });
     } catch (error) {
       next(error);
     }

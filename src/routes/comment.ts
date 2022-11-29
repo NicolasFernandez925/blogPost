@@ -8,7 +8,7 @@ router.post(
   '/create',
   (req, res, next) => authMiddelware.use(req, res, next),
   (req, res, next) => {
-    commentController.createComment(req, res, next);
+    commentController.create(req, res, next);
   }
 );
 
@@ -16,7 +16,23 @@ router.put(
   '/edit',
   (req, res, next) => authMiddelware.use(req, res, next),
   (req, res, next) => {
-    commentController.updateComment(req, res, next);
+    commentController.update(req, res, next);
+  }
+);
+
+router.delete(
+  '/',
+  (req, res, next) => authMiddelware.use(req, res, next),
+  (req, res, next) => {
+    commentController.delete(req, res, next);
+  }
+);
+
+router.get(
+  '/:id',
+  (req, res, next) => authMiddelware.use(req, res, next),
+  (req, res, next) => {
+    commentController.findAllById(req, res, next);
   }
 );
 

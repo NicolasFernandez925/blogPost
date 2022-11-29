@@ -41,7 +41,7 @@ class PostMapper implements Mapper<Model<IPost>, IPostDTO> {
     };
   }
 
-  collectionOfDto(data: Array<Model<IPost>>): IPostDTO[] {
+  collectionOfDto(data: Model<IPost>[]): IPostDTO[] {
     return data.map((item) => {
       return this.toDto(item);
     });

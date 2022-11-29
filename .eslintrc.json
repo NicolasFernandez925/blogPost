@@ -31,6 +31,7 @@
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/strict-boolean-expressions": 0,
     "@typescript-eslint/promise-function-async": 0,
-    "@typescript-eslint/naming-convention": 0
+    "@typescript-eslint/naming-convention": 0,
+    "@typescript-eslint/array-type": 0
   }
 }

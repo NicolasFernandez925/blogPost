@@ -29,9 +29,7 @@ export class CommentRepository {
   }
 
   public async getById(id: number): Promise<Model<IComment> | null> {
-    const comment = await this.models.Comment.findByPk(id, {
-      include: this.relationships
-    });
+    const comment = await this.models.Comment.findByPk(id);
 
     return comment;
   }
@@ -53,6 +51,25 @@ export class CommentRepository {
     });
 
     return commentUpdated!;
+  }
+
+  public async delete(id: number): Promise<void> {
+    await this.models.Comment.destroy({
+      where: {
+        id
+      }
+    });
+  }
+
+  public async findAllById(commentId: number): Promise<Model<IComment>[]> {
+    const comments = await this.models.Comment.findAll({
+      where: {
+        commentId
+      },
+      include: this.relationships
+    });
+
+    return comments;
   }
 
   get relationships(): any {

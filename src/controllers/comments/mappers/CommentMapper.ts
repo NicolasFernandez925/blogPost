@@ -45,4 +45,10 @@ export class CommentMapper implements Mapper<Model<IComment>, ICommentDTO> {
       }
     };
   }
+
+  collectionOfDto(data: Model<IComment>[]): ICommentDTO[] {
+    return data.map((item) => {
+      return this.toDto(item);
+    });
+  }
 }

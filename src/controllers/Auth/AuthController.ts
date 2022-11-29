@@ -1,11 +1,17 @@
+import { IUserDTO } from 'controllers/User/dtos/IUserDTO';
 import { NextFunction, Request, Response } from 'express';
 import { Inject } from 'injection-js';
 import { IResponseRegister } from 'services/Auth/AuthService';
+import HttpStatusCode from 'utils/HttpStatusCode';
 import { BaseController } from '../../controllers/BaseController';
 import { IAuthService } from '../../services/Auth/IAuthService';
 import { AuthMapperToken, IAuthServiceToken } from './inyection/inyection.tokens';
 
 import { AuthMapper } from './mappers/AuthMapper';
+
+interface IRegisterDTO extends Omit<IResponseRegister, 'userCreated'> {
+  user: IUserDTO;
+}
 
 export class AuthController extends BaseController {
   constructor(
@@ -23,6 +29,8 @@ export class AuthController extends BaseController {
     try {
       const token = await this.service.login({ email, password });
       res.status(200).json({ token });
+
+      this.ok<string>({ res, status: HttpStatusCode.OK, data: token });
     } catch (e) {
       next(e);
     }
@@ -34,6 +42,12 @@ export class AuthController extends BaseController {
     try {
       const user: IResponseRegister = await this.service.register({ email, password, name });
       res.status(200).json({ user: this.mapper.toDto(user.userCreated), token: user.token });
+
+      this.ok<IRegisterDTO>({
+        res,
+        status: HttpStatusCode.OK,
+        data: { user: this.mapper.toDto(user.userCreated), token: user.token }
+      });
     } catch (e) {
       next(e);
     }

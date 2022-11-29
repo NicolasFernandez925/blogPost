@@ -6,6 +6,7 @@ import { CommentMapperToken, ICommentServiceToken } from './inyection/inyection'
 import { ICommentService } from 'services/Comment/ICommentService';
 import { ICustomRequest } from 'middelwares/auth/AuthMiddelware';
 import { ICommentDTO } from './dtos/ICommentDTO';
+import HttpStatusCode from '../../utils/HttpStatusCode';
 
 export class CommentController extends BaseController {
   constructor(
@@ -17,25 +18,47 @@ export class CommentController extends BaseController {
     this.service = service;
   }
 
-  public async createComment(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { post_id, comment } = req.body;
     const _req = req as ICustomRequest;
     const user_id = _req.user;
 
     try {
-      const commentCreated = await this.service.createComment({ post_id, comment, user_id });
-      this.ok<ICommentDTO>(res, this.mapper.toDto(commentCreated));
+      const commentCreated = await this.service.create({ post_id, comment, user_id });
+      this.ok<ICommentDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(commentCreated) });
     } catch (e) {
       next(e);
     }
   }
 
-  public async updateComment(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { comment, id } = req.body;
 
     try {
-      const commentUpdated = await this.service.updateComment({ id, comment });
-      this.ok<ICommentDTO>(res, this.mapper.toDto(commentUpdated));
+      const commentUpdated = await this.service.update({ id, comment });
+      this.ok<ICommentDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(commentUpdated) });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { id } = req.body;
+
+    try {
+      await this.service.delete(id);
+      this.ok({ res, status: HttpStatusCode.NO_CONTENT });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async findAllById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { id } = req.params;
+
+    try {
+      const comments = await this.service.findAllById(Number(id));
+      this.ok<ICommentDTO[]>({ res, status: HttpStatusCode.OK, data: this.mapper.collectionOfDto(comments) });
     } catch (e) {
       next(e);
     }

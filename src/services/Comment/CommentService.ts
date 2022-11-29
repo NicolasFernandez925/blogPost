@@ -23,7 +23,7 @@ export class CommentService implements ICommentService {
     this.repository = repository;
   }
 
-  public async createComment({ post_id, comment, user_id }: IPropsBodyComment): Promise<Model<IComment>> {
+  public async create({ post_id, comment, user_id }: IPropsBodyComment): Promise<Model<IComment>> {
     const newComment = {
       postId: post_id,
       userId: user_id,
@@ -34,8 +34,38 @@ export class CommentService implements ICommentService {
     return result;
   }
 
-  public async updateComment({ id, comment }: IPropsBodyUpdateComment): Promise<Model<IComment>> {
+  public async update({ id, comment }: IPropsBodyUpdateComment): Promise<Model<IComment>> {
+    if (!this.existedComment(id)) {
+      throw new Error('Comment not found');
+    }
+
     const result = await this.repository.update({ id, comment });
+
+    return result;
+  }
+
+  public async delete(id: number): Promise<void> {
+    console.log();
+
+    if (await this.existedComment(id)) {
+      throw new Error('Comment not found');
+    }
+
+    await this.repository.delete(id);
+  }
+
+  private async existedComment(id: number): Promise<boolean> {
+    const comment = await this.repository.getById(id);
+
+    return !comment;
+  }
+
+  public async findAllById(id: number): Promise<Model<IComment>[]> {
+    if (await this.existedComment(id)) {
+      throw new Error('Comment not found');
+    }
+
+    const result = await this.repository.findAllById(id);
 
     return result;
   }
