@@ -5,8 +5,6 @@ import { IComment } from '../interfaces/comment.interface';
 
 export class CommentMapper implements Mapper<Model<IComment>, ICommentDTO> {
   public toDto(data: Model<IComment>): ICommentDTO {
-    console.log(data.dataValues.post.comments[0].comment);
-
     return {
       id: data.dataValues.id,
       comment: data.dataValues.comment,

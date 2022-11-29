@@ -29,4 +29,15 @@ export class CommentController extends BaseController {
       next(e);
     }
   }
+
+  public async updateComment(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { comment, id } = req.body;
+
+    try {
+      const commentUpdated = await this.service.updateComment({ id, comment });
+      this.ok<ICommentDTO>(res, this.mapper.toDto(commentUpdated));
+    } catch (e) {
+      next(e);
+    }
+  }
 }

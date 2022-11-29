@@ -11,6 +11,12 @@ export interface IPropsBodyComment {
   user_id: number;
 }
 
+export interface IUpdateComment extends Partial<IComment> {}
+export interface IPropsBodyUpdateComment {
+  comment: IUpdateComment;
+  id: number;
+}
+
 @Injectable()
 export class CommentService implements ICommentService {
   constructor(@Inject(CommentRepositoryToken) private repository: CommentRepository) {
@@ -25,6 +31,12 @@ export class CommentService implements ICommentService {
     };
 
     const result = await this.repository.create(newComment);
+    return result;
+  }
+
+  public async updateComment({ id, comment }: IPropsBodyUpdateComment): Promise<Model<IComment>> {
+    const result = await this.repository.update({ id, comment });
+
     return result;
   }
 }

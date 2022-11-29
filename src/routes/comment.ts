@@ -12,4 +12,12 @@ router.post(
   }
 );
 
+router.put(
+  '/edit',
+  (req, res, next) => authMiddelware.use(req, res, next),
+  (req, res, next) => {
+    commentController.updateComment(req, res, next);
+  }
+);
+
 export { router };

@@ -6,6 +6,7 @@ import { Post } from 'db/models/posts.model';
 import { User } from 'db/models/users.model';
 import { Injectable } from 'injection-js';
 import { Optional, Model } from 'Sequelize';
+import { IPropsBodyUpdateComment } from 'services/Comment/CommentService';
 
 @Injectable()
 export class CommentRepository {
@@ -25,6 +26,33 @@ export class CommentRepository {
     });
 
     return commentCreated!;
+  }
+
+  public async getById(id: number): Promise<Model<IComment> | null> {
+    const comment = await this.models.Comment.findByPk(id, {
+      include: this.relationships
+    });
+
+    return comment;
+  }
+
+  public async update({ id, comment }: IPropsBodyUpdateComment): Promise<Model<IComment>> {
+    await this.models.Comment.update(
+      {
+        comment
+      },
+      {
+        where: {
+          id
+        }
+      }
+    );
+
+    const commentUpdated = await this.models.Comment.findByPk(id, {
+      include: this.relationships
+    });
+
+    return commentUpdated!;
   }
 
   get relationships(): any {
