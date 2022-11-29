@@ -1,3 +1,4 @@
+import { IComment } from 'controllers/comments/interfaces/comment.interface';
 import { Model, DataTypes, Sequelize, InitOptions } from 'Sequelize';
 import { POSTS_TABLE } from './posts.model';
 import { USERS_TABLE } from './users.model';
@@ -51,7 +52,7 @@ const CommentsSchema = {
   }
 };
 
-class Comment extends Model<any> {
+class Comment extends Model<IComment> {
   static associate(models: any): void {
     this.belongsTo(models.Post, {
       as: 'post'

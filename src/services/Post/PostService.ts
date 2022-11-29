@@ -1,5 +1,4 @@
 import { Model } from 'Sequelize';
-import { SingletonDatabase } from '../../db/database';
 import { IPostService } from './IPostService';
 import { Label, Post as IPost } from '../../controllers/Post/interfaces/post.interface';
 import { PostRepository } from '../../repository/PostRepository';
@@ -16,10 +15,7 @@ export interface response {
 
 @Injectable()
 export class PostService implements IPostService {
-  protected models;
-
   constructor(@Inject(PostRepositoryToken) private repository: PostRepository) {
-    this.models = SingletonDatabase.sequelize.models;
     this.repository = repository;
   }
 

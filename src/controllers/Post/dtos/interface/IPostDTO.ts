@@ -1,7 +1,7 @@
 import { Post } from 'controllers/Post/interfaces/post.interface';
 import { IUserDTO } from 'controllers/User/dtos/IUserDTO';
 
-interface ICommentsDTO {
+export interface ICommentsDTO {
   id: number;
   contents: string;
   user: IUserDTO;

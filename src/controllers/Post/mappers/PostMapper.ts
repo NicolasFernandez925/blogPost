@@ -24,7 +24,7 @@ class PostMapper implements Mapper<Model<IPost>, IPostDTO> {
       comments: data.dataValues.comments.map((comment) => {
         return {
           id: comment.id,
-          contents: comment.contents,
+          contents: comment.comment,
           user: {
             id: comment.user.id,
             email: comment.user.email,

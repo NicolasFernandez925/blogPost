@@ -1,7 +1,7 @@
 export interface User {
   id: number;
   email: string;
-  password: string;
+  /*  password: string; */
   name: string;
 }
 
@@ -29,6 +29,6 @@ export interface Label {
 
 export interface Comment {
   id: number;
-  contents: string;
+  comment: string;
   user: User;
 }
