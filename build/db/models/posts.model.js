@@ -38,9 +38,7 @@ const PostsSchema = {
         references: {
             model: categories_model_1.CATEGORIES_TABLE,
             key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        }
     },
     userId: {
         field: 'user_id',

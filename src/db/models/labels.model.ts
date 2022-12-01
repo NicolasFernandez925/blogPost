@@ -37,7 +37,7 @@ class Label extends Model {
     });
   }
 
-  static config(sequelize: Sequelize): InitOptions<any> {
+  static config(sequelize: Sequelize): InitOptions<Label> {
     return {
       sequelize,
       tableName: LABELS_TABLE,

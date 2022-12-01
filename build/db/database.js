@@ -29,7 +29,7 @@ class SingletonDatabase {
         categories_model_1.Category.associate(SingletonDatabase.sequelize.models);
         posts_model_1.Post.associate(SingletonDatabase.sequelize.models);
         users_model_1.User.associate(SingletonDatabase.sequelize.models);
-        labels_model_1.Label.associate(SingletonDatabase.sequelize.models);
+        /*  Label.associate(SingletonDatabase.sequelize.models); */
         comments_model_1.Comment.associate(SingletonDatabase.sequelize.models);
     }
 }

@@ -35,20 +35,16 @@ const PostsSchema = {
     field: 'category_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-
     references: {
       model: CATEGORIES_TABLE,
       key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+    }
   },
 
   userId: {
     field: 'user_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-
     references: {
       model: USERS_TABLE,
       key: 'id'
@@ -68,7 +64,7 @@ const PostsSchema = {
   }
 };
 
-class Post extends Model<IPost> {
+class Post extends Model {
   static associate(models: any): void {
     this.belongsTo(models.Category, {
       as: 'category'

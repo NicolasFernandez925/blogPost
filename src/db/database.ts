@@ -30,17 +30,17 @@ class SingletonDatabase {
   }
 
   private setupModels(): void {
-    User.init<any, any>(UsersSchema, User.config(SingletonDatabase.sequelize));
-    Category.init<any, any>(CategoriesSchema, Category.config(SingletonDatabase.sequelize));
-    Post.init<any, any>(PostsSchema, Post.config(SingletonDatabase.sequelize));
-    Label.init<any, any>(LabelSchema, Label.config(SingletonDatabase.sequelize));
-    LabelPost.init<any, any>(LabelsPostSchema, LabelPost.config(SingletonDatabase.sequelize));
-    Comment.init<any, any>(CommentsSchema, Comment.config(SingletonDatabase.sequelize));
+    User.init(UsersSchema, User.config(SingletonDatabase.sequelize));
+    Category.init(CategoriesSchema, Category.config(SingletonDatabase.sequelize));
+    Post.init(PostsSchema, Post.config(SingletonDatabase.sequelize));
+    Label.init(LabelSchema, Label.config(SingletonDatabase.sequelize));
+    LabelPost.init(LabelsPostSchema, LabelPost.config(SingletonDatabase.sequelize));
+    Comment.init(CommentsSchema, Comment.config(SingletonDatabase.sequelize));
 
     Category.associate(SingletonDatabase.sequelize.models);
     Post.associate(SingletonDatabase.sequelize.models);
     User.associate(SingletonDatabase.sequelize.models);
-    Label.associate(SingletonDatabase.sequelize.models);
+    /*  Label.associate(SingletonDatabase.sequelize.models); */
     Comment.associate(SingletonDatabase.sequelize.models);
   }
 }

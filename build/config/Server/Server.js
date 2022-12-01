@@ -43,7 +43,7 @@ class Server {
         this.app.use((err, req, res, next) => {
             console.log(err);
             res.status(500);
-            res.json({ message: err.message });
+            res.json({ data: err.message });
         });
     }
     execute() {

@@ -43,17 +43,17 @@ export class CommentController extends BaseController {
   }
 
   public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { id } = req.body;
+    const { id } = req.params;
 
     try {
-      await this.service.delete(id);
+      await this.service.delete(Number(id));
       this.ok({ res, status: HttpStatusCode.NO_CONTENT });
     } catch (e) {
       next(e);
     }
   }
 
-  public async findAllById(req: Request, res: Response, next: NextFunction): Promise<void> {
+  /*   public async findAllById(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.params;
 
     try {
@@ -62,5 +62,5 @@ export class CommentController extends BaseController {
     } catch (e) {
       next(e);
     }
-  }
+  } */
 }

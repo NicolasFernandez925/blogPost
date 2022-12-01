@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const BaseController_1 = require("../BaseController");
+const HttpStatusCode_1 = __importDefault(require("utils/HttpStatusCode"));
 class UserController extends BaseController_1.BaseController {
     constructor(service, mapper) {
         super();
@@ -21,7 +25,7 @@ class UserController extends BaseController_1.BaseController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const users = yield this.service.getAll();
-                this.ok(res, this.mapper.collectionOfDto(users));
+                this.ok({ res, status: HttpStatusCode_1.default.OK, data: this.mapper.collectionOfDto(users) });
             }
             catch (error) {
                 next(error);
@@ -36,7 +40,7 @@ class UserController extends BaseController_1.BaseController {
                 if (user === null) {
                     throw new Error('the user was not found ');
                 }
-                this.ok(res, this.mapper.toDto(user));
+                this.ok({ res, status: HttpStatusCode_1.default.OK, data: this.mapper.toDto(user) });
             }
             catch (error) {
                 next(error);

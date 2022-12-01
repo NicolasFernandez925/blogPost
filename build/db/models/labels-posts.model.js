@@ -17,6 +17,8 @@ const LabelsPostSchema = {
         field: 'post_id',
         allowNull: false,
         type: Sequelize_1.DataTypes.INTEGER,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
         references: {
             model: posts_model_1.POSTS_TABLE,
             key: 'id'

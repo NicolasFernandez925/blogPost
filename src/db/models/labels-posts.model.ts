@@ -16,7 +16,8 @@ const LabelsPostSchema = {
     field: 'post_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
     references: {
       model: POSTS_TABLE,
       key: 'id'
@@ -26,7 +27,6 @@ const LabelsPostSchema = {
     field: 'label_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-
     references: {
       model: LABELS_TABLE,
       key: 'id'
@@ -37,7 +37,7 @@ const LabelsPostSchema = {
 class LabelPost extends Model<any> {
   /* static associate(models: any): void {} */
 
-  static config(sequelize: Sequelize): InitOptions<any> {
+  static config(sequelize: Sequelize): InitOptions<LabelPost> {
     return {
       sequelize,
       tableName: LABELS_POSTS_TABLE,

@@ -21,19 +21,19 @@ router.put(
 );
 
 router.delete(
-  '/',
+  '/:id',
   (req, res, next) => authMiddelware.use(req, res, next),
   (req, res, next) => {
     commentController.delete(req, res, next);
   }
 );
 
-router.get(
+/* router.get(
   '/:id',
   (req, res, next) => authMiddelware.use(req, res, next),
   (req, res, next) => {
     commentController.findAllById(req, res, next);
   }
-);
+); */
 
 export { router };

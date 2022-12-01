@@ -50,4 +50,26 @@ export class PostController extends BaseController {
       next(error);
     }
   }
+
+  async update(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { id } = req.params;
+
+    try {
+      const post = await this.postService.update(id, req.body);
+      this.ok<IPostDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(post) });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { id } = req.params;
+
+    try {
+      await this.postService.delete(id);
+      this.ok({ res, status: HttpStatusCode.NO_CONTENT });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

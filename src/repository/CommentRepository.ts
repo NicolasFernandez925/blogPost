@@ -61,7 +61,7 @@ export class CommentRepository {
     });
   }
 
-  public async findAllById(commentId: number): Promise<Model<IComment>[]> {
+  /*   public async findAllById(commentId: number): Promise<Model<IComment>[]> {
     const comments = await this.models.Comment.findAll({
       where: {
         commentId
@@ -70,7 +70,7 @@ export class CommentRepository {
     });
 
     return comments;
-  }
+  } */
 
   get relationships(): any {
     return [

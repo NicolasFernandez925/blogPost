@@ -43,7 +43,7 @@ export class Server {
     this.app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
       console.log(err);
       res.status(500);
-      res.json({ message: err.message });
+      res.json({ data: err.message });
     });
   }
 

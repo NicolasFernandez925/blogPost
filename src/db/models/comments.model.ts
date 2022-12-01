@@ -1,4 +1,3 @@
-import { IComment } from 'controllers/comments/interfaces/comment.interface';
 import { Model, DataTypes, Sequelize, InitOptions } from 'Sequelize';
 import { POSTS_TABLE } from './posts.model';
 import { USERS_TABLE } from './users.model';
@@ -21,7 +20,6 @@ const CommentsSchema = {
     field: 'user_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-
     references: {
       model: USERS_TABLE,
       key: 'id'
@@ -32,7 +30,8 @@ const CommentsSchema = {
     field: 'post_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
     references: {
       model: POSTS_TABLE,
       key: 'id'
@@ -52,7 +51,7 @@ const CommentsSchema = {
   }
 };
 
-class Comment extends Model<IComment> {
+class Comment extends Model {
   static associate(models: any): void {
     this.belongsTo(models.Post, {
       as: 'post'
@@ -63,7 +62,7 @@ class Comment extends Model<IComment> {
     });
   }
 
-  static config(sequelize: Sequelize): InitOptions<any> {
+  static config(sequelize: Sequelize): InitOptions<Comment> {
     return {
       sequelize,
       tableName: COMMENTS_TABLE,

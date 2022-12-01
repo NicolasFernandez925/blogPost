@@ -30,14 +30,14 @@ const LabelSchema = {
 };
 exports.LabelSchema = LabelSchema;
 class Label extends Sequelize_1.Model {
-    static associate(models) {
-        this.belongsToMany(models.Post, {
-            as: 'posts',
-            through: models.LabelPost,
-            foreignKey: 'labelId',
-            otherKey: 'postId'
-        });
-    }
+    /* static associate(models: any): void {
+      this.belongsToMany(models.Post, {
+        as: 'posts',
+        through: models.LabelPost,
+        foreignKey: 'labelId',
+        otherKey: 'postId'
+      });
+    } */
     static config(sequelize) {
         return {
             sequelize,

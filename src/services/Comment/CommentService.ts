@@ -60,13 +60,13 @@ export class CommentService implements ICommentService {
     return !comment;
   }
 
-  public async findAllById(id: number): Promise<Model<IComment>[]> {
-    if (await this.existedComment(id)) {
+  /*   public async findAllById(postId: number): Promise<Model<IComment>[]> {
+    if (await this.existedComment(postId)) {
       throw new Error('Comment not found');
     }
 
-    const result = await this.repository.findAllById(id);
+    const result = await this.repository.findAllById(postId);
 
     return result;
-  }
+  } */
 }
