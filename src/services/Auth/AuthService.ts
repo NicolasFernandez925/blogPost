@@ -7,6 +7,8 @@ import { IAuthService } from './IAuthService';
 import { IUser } from '../../controllers/User/interfaces/user.interface';
 import { Inject, Injectable } from 'injection-js';
 import { AuthRepositoryToken } from 'controllers/Auth/inyection/inyection.tokens';
+import { CustomError } from 'error/BaseError';
+import HttpStatusCode from 'utils/HttpStatusCode';
 
 export interface IJwtPayload {
   id: string | number | undefined;
@@ -35,13 +37,13 @@ export class AuthService implements IAuthService {
     const user = await this.repository.getUserByEmail(email);
 
     if (!user) {
-      throw new Error('User not found with email' + email);
+      throw new CustomError('User not found', HttpStatusCode.NOT_FOUND, 'Not found');
     }
 
     const isCorrectPassword = await bcrypt.compare(password, user.dataValues.password);
 
     if (!isCorrectPassword) {
-      throw new Error('Password is incorrect');
+      throw new CustomError('Invalid token', HttpStatusCode.FORBIDDEN, 'Forbidden');
     }
 
     const payload: IJwtPayload = {
@@ -57,7 +59,7 @@ export class AuthService implements IAuthService {
     const checkUserExist = await this.repository.getUserByEmail(userRegister.email);
 
     if (checkUserExist) {
-      throw new Error('User already exist with email' + userRegister.email);
+      throw new CustomError('User already exist with email', HttpStatusCode.CONFLICT, 'Aaready exist ');
     }
 
     const userWithPasswordEncrypt = this.encryptPasswordToUser(userRegister);
@@ -90,7 +92,7 @@ export class AuthService implements IAuthService {
     const user = jwt.verify(token, 'secret') as IJwtPayload;
 
     if (!user) {
-      throw new Error('Invalid token');
+      throw new CustomError('Invalid token', HttpStatusCode.UNAUTHORIZED, 'Unauthorized');
     }
 
     return await this.repository.getUserByToken(user);

@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { ValidationError } from 'express-validator';
 import HttpStatusCode from '../utils/HttpStatusCode';
 
 interface IResponse<T> {
@@ -19,13 +18,5 @@ export class BaseController {
       const key = data ? 'data' : 'errors';
       res.status(status).json({ [key]: value });
     }
-  }
-
-  protected responseBadRequest(res: Response, errors: ValidationError[]): void {
-    this.response({ res, status: HttpStatusCode.BAD_REQUEST, errors });
-  }
-
-  protected responseUnauthorized(res: Response): void {
-    this.response({ res, status: HttpStatusCode.UNAUTHORIZED, data: 'Unauthorized' });
   }
 }

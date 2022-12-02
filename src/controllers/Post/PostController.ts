@@ -9,6 +9,7 @@ import { IPostServiceToken, IValidatorToken, PostMapperToken } from './inyection
 import HttpStatusCode from 'utils/HttpStatusCode';
 import { IValidator } from 'validator/IValidator';
 import { IResponseValidator } from 'validator/Validator';
+import { CustomError } from 'error/BaseError';
 
 export class PostController extends BaseController {
   constructor(
@@ -35,16 +36,14 @@ export class PostController extends BaseController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     const _req = req as ICustomRequest;
 
-    const validator: IResponseValidator = this.validator.validate(req, res, next);
-
-    if (validator.hasError) {
-      this.responseBadRequest(res, validator.errors.array());
-      return;
-    }
+    const { hasError, errors }: IResponseValidator = this.validator.validate(req, res, next);
 
     try {
-      const post = await this.postService.create(req.body, _req.user);
+      if (hasError) {
+        throw new CustomError('Bad request', HttpStatusCode.BAD_REQUEST, 'Bad request', errors.array());
+      }
 
+      const post = await this.postService.create(req.body, _req.user);
       this.response<IPostDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(post) });
     } catch (error) {
       next(error);
@@ -54,14 +53,13 @@ export class PostController extends BaseController {
   async findById(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.params;
 
-    const validator: IResponseValidator = this.validator.validate(req, res, next);
-
-    if (validator.hasError) {
-      this.responseBadRequest(res, validator.errors.array());
-      return;
-    }
+    const { hasError, errors }: IResponseValidator = this.validator.validate(req, res, next);
 
     try {
+      if (hasError) {
+        throw new CustomError('Bad request', HttpStatusCode.BAD_REQUEST, 'Bad request', errors.array());
+      }
+
       const post = await this.postService.findById(id);
       this.response<IPostDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(post!) });
     } catch (error) {
@@ -72,14 +70,13 @@ export class PostController extends BaseController {
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.params;
 
-    const validator: IResponseValidator = this.validator.validate(req, res, next);
-
-    if (validator.hasError) {
-      this.responseBadRequest(res, validator.errors.array());
-      return;
-    }
+    const { hasError, errors }: IResponseValidator = this.validator.validate(req, res, next);
 
     try {
+      if (hasError) {
+        throw new CustomError('Bad request', HttpStatusCode.BAD_REQUEST, 'Bad request', errors.array());
+      }
+
       const post = await this.postService.update(id, req.body);
       this.response<IPostDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(post) });
     } catch (error) {
@@ -90,14 +87,13 @@ export class PostController extends BaseController {
   async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.params;
 
-    const validator: IResponseValidator = this.validator.validate(req, res, next);
-
-    if (validator.hasError) {
-      this.responseBadRequest(res, validator.errors.array());
-      return;
-    }
+    const { hasError, errors }: IResponseValidator = this.validator.validate(req, res, next);
 
     try {
+      if (hasError) {
+        throw new CustomError('Bad request', HttpStatusCode.BAD_REQUEST, 'Bad request', errors.array());
+      }
+
       await this.postService.delete(id);
       this.response({ res, status: HttpStatusCode.NO_CONTENT });
     } catch (error) {

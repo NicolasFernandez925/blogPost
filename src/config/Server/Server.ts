@@ -3,6 +3,7 @@ import cors from 'cors';
 import { router } from '../../routes';
 import { SingletonDatabase } from '../../db/database';
 import { Error } from 'Sequelize';
+import { ErrorMiddelware } from 'middelwares/error/error.middelware';
 
 export class Server {
   private readonly app;
@@ -40,11 +41,9 @@ export class Server {
   }
 
   private middelwares(): void {
-    this.app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
-      console.log(err);
-      res.status(500);
-      res.json({ data: err.message });
-    });
+    this.app.use((err: Error, req: Request, res: Response, next: NextFunction): void =>
+      ErrorMiddelware.use(err, req, res, next)
+    );
   }
 
   async execute(): Promise<void> {

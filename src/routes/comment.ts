@@ -1,6 +1,6 @@
 import { commentController } from 'controllers/comments/inyection';
 import { Router } from 'express';
-import { authMiddelware } from 'middelwares/auth/auth.middelware';
+import { authMiddelware } from 'middelwares/auth/inyection/auth.middelware';
 
 const router = Router();
 

@@ -4,6 +4,8 @@ import { Label, Post as IPost } from '../../controllers/Post/interfaces/post.int
 import { PostRepository } from '../../repository/PostRepository';
 import { Inject, Injectable } from 'injection-js';
 import { PostRepositoryToken } from 'controllers/Post/inyection/inyection.tokens';
+import { CustomError } from 'error/BaseError';
+import HttpStatusCode from 'utils/HttpStatusCode';
 
 export interface ICreatedPost {
   title: string;
@@ -47,7 +49,7 @@ export class PostService implements IPostService {
     const post = await this.repository.findById(id);
 
     if (post === null) {
-      throw new Error('the post was not found ' + id);
+      throw new CustomError('Post not found', HttpStatusCode.NOT_FOUND, 'Not found');
     }
 
     return post;
@@ -55,7 +57,7 @@ export class PostService implements IPostService {
 
   async update(id: string, body: IUpdatePost): Promise<Model<IPost>> {
     if (await this.existedPost(Number(id))) {
-      throw new Error('Post not found');
+      throw new CustomError('Post not found', HttpStatusCode.NOT_FOUND, 'Not found');
     }
 
     const updatePost = {
@@ -73,7 +75,7 @@ export class PostService implements IPostService {
 
   async delete(id: string): Promise<void> {
     if (await this.existedPost(Number(id))) {
-      throw new Error('Post not found');
+      throw new CustomError('Post not found', HttpStatusCode.NOT_FOUND, 'Not found');
     }
 
     await this.repository.delete(id);

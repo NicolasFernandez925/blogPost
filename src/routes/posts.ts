@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { postController } from 'controllers/Post/inyection';
-import { authMiddelware } from 'middelwares/auth/auth.middelware';
+import { authMiddelware } from 'middelwares/auth/inyection/auth.middelware';
 import { ValidatorPostMiddelware } from 'controllers/Post/middelware/Validator.middelware';
 
 const router = Router();
