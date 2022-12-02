@@ -8,6 +8,7 @@ import { ICustomRequest } from 'middelwares/auth/AuthMiddelware';
 import { IPostServiceToken, IValidatorToken, PostMapperToken } from './inyection/inyection.tokens';
 import HttpStatusCode from 'utils/HttpStatusCode';
 import { IValidator } from 'validator/IValidator';
+import { IResponseValidator } from 'validator/Validator';
 
 export class PostController extends BaseController {
   constructor(
@@ -34,7 +35,12 @@ export class PostController extends BaseController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     const _req = req as ICustomRequest;
 
-    this.validator.validate(req, res, next);
+    const validator: IResponseValidator = this.validator.validate(req, res, next);
+
+    if (validator.hasError) {
+      this.responseBadRequest(res, validator.errors.array());
+      return;
+    }
 
     try {
       const post = await this.postService.create(req.body, _req.user);
@@ -48,7 +54,12 @@ export class PostController extends BaseController {
   async findById(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.params;
 
-    this.validator.validate(req, res, next);
+    const validator: IResponseValidator = this.validator.validate(req, res, next);
+
+    if (validator.hasError) {
+      this.responseBadRequest(res, validator.errors.array());
+      return;
+    }
 
     try {
       const post = await this.postService.findById(id);
@@ -61,7 +72,12 @@ export class PostController extends BaseController {
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.params;
 
-    this.validator.validate(req, res, next);
+    const validator: IResponseValidator = this.validator.validate(req, res, next);
+
+    if (validator.hasError) {
+      this.responseBadRequest(res, validator.errors.array());
+      return;
+    }
 
     try {
       const post = await this.postService.update(id, req.body);
@@ -74,7 +90,12 @@ export class PostController extends BaseController {
   async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.params;
 
-    this.validator.validate(req, res, next);
+    const validator: IResponseValidator = this.validator.validate(req, res, next);
+
+    if (validator.hasError) {
+      this.responseBadRequest(res, validator.errors.array());
+      return;
+    }
 
     try {
       await this.postService.delete(id);

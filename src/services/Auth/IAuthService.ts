@@ -1,9 +1,11 @@
-import { IPropsBody, IUserWithoutName } from './AuthService';
+import { IPropsBody, IResponseUser, IUserWithoutName } from './AuthService';
+import { Model } from 'Sequelize';
+import { IUser } from 'controllers/User/interfaces/user.interface';
 
 interface IAuthService {
-  getUserByToken: (token: string) => Promise<any>;
-  login: (user: IUserWithoutName) => Promise<string>;
-  register: (user: IPropsBody) => Promise<any>;
+  getUserByToken: (token: string) => Promise<Model<IUser> | null>;
+  login: (user: IUserWithoutName) => Promise<IResponseUser>;
+  register: (user: IPropsBody) => Promise<IResponseUser>;
 }
 
 export { IAuthService };

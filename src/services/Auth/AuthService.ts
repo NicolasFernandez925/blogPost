@@ -18,8 +18,8 @@ export interface IPropsBody {
   name: string;
 }
 
-export interface IResponseRegister {
-  userCreated: Model<IUser>;
+export interface IResponseUser {
+  user: Model<IUser>;
   token: string;
 }
 
@@ -31,7 +31,7 @@ export class AuthService implements IAuthService {
     this.repository = repository;
   }
 
-  public async login({ email, password }: IUserWithoutName): Promise<string> {
+  public async login({ email, password }: IUserWithoutName): Promise<IResponseUser> {
     const user = await this.repository.getUserByEmail(email);
 
     if (!user) {
@@ -50,26 +50,26 @@ export class AuthService implements IAuthService {
 
     const token = this.signJwt(payload);
 
-    return token;
+    return { token, user };
   }
 
-  public async register(user: IPropsBody): Promise<IResponseRegister> {
-    const checkUserExist = await this.repository.getUserByEmail(user.email);
+  public async register(userRegister: IPropsBody): Promise<IResponseUser> {
+    const checkUserExist = await this.repository.getUserByEmail(userRegister.email);
 
     if (checkUserExist) {
-      throw new Error('User already exist with email' + user.email);
+      throw new Error('User already exist with email' + userRegister.email);
     }
 
-    const userWithPasswordEncrypt = this.encryptPasswordToUser(user);
-    const userCreated = await this.repository.register(userWithPasswordEncrypt);
+    const userWithPasswordEncrypt = this.encryptPasswordToUser(userRegister);
+    const user = await this.repository.register(userWithPasswordEncrypt);
 
     const payload: IJwtPayload = {
-      id: userCreated.dataValues.id
+      id: user.dataValues.id
     };
 
     const token = this.signJwt(payload);
 
-    return { userCreated, token };
+    return { user, token };
   }
 
   private encryptPasswordToUser(user: IUser, saltRound = 10): IUser {
@@ -86,7 +86,7 @@ export class AuthService implements IAuthService {
     return token;
   }
 
-  public async getUserByToken(token: string): Promise<any> {
+  public async getUserByToken(token: string): Promise<Model<IUser> | null> {
     const user = jwt.verify(token, 'secret') as IJwtPayload;
 
     if (!user) {

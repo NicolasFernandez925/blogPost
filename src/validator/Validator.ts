@@ -1,18 +1,23 @@
 import { BaseController } from 'controllers/BaseController';
 import { NextFunction, Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+import { Result, ValidationError, validationResult } from 'express-validator';
 import { Injectable } from 'injection-js';
-import HttpStatusCode from 'utils/HttpStatusCode';
 import { IValidator } from './IValidator';
+
+export interface IResponseValidator {
+  hasError: boolean;
+  errors: Result<ValidationError>;
+}
 
 @Injectable()
 export class Validator extends BaseController implements IValidator {
-  validate(req: Request, res: Response, next?: NextFunction): void {
+  validate(req: Request, res: Response, next?: NextFunction): IResponseValidator {
     const errors = validationResult(req);
-
+    let hasError = false;
     if (!errors.isEmpty()) {
-      this.response({ res, status: HttpStatusCode.BAD_REQUEST, data: errors.array() });
-      return;
+      hasError = true;
     }
+
+    return { hasError, errors };
   }
 }

@@ -1,7 +1,7 @@
 import { IUserDTO } from 'controllers/User/dtos/IUserDTO';
 import { NextFunction, Request, Response } from 'express';
 import { Inject } from 'injection-js';
-import { IResponseRegister } from 'services/Auth/AuthService';
+import { IResponseUser } from 'services/Auth/AuthService';
 import HttpStatusCode from 'utils/HttpStatusCode';
 import { BaseController } from '../../controllers/BaseController';
 import { IAuthService } from '../../services/Auth/IAuthService';
@@ -9,7 +9,7 @@ import { AuthMapperToken, IAuthServiceToken } from './inyection/inyection.tokens
 
 import { AuthMapper } from './mappers/AuthMapper';
 
-interface IRegisterDTO extends Omit<IResponseRegister, 'userCreated'> {
+interface IResponseUserDTO extends Omit<IResponseUser, 'user'> {
   user: IUserDTO;
 }
 
@@ -27,10 +27,13 @@ export class AuthController extends BaseController {
     const { email, password } = req.body;
 
     try {
-      const token = await this.service.login({ email, password });
-      res.status(200).json({ token });
+      const { user, token } = await this.service.login({ email, password });
 
-      this.response<string>({ res, status: HttpStatusCode.OK, data: token });
+      this.response<IResponseUserDTO>({
+        res,
+        status: HttpStatusCode.OK,
+        data: { user: this.mapper.toDto(user), token }
+      });
     } catch (e) {
       next(e);
     }
@@ -40,13 +43,13 @@ export class AuthController extends BaseController {
     const { email, password, name } = req.body;
 
     try {
-      const user: IResponseRegister = await this.service.register({ email, password, name });
-      res.status(200).json({ user: this.mapper.toDto(user.userCreated), token: user.token });
+      const { user, token } = await this.service.register({ email, password, name });
+      res.status(200).json({ user: this.mapper.toDto(user), token });
 
-      this.response<IRegisterDTO>({
+      this.response<IResponseUserDTO>({
         res,
         status: HttpStatusCode.OK,
-        data: { user: this.mapper.toDto(user.userCreated), token: user.token }
+        data: { user: this.mapper.toDto(user), token }
       });
     } catch (e) {
       next(e);
