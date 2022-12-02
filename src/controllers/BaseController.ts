@@ -5,16 +5,18 @@ interface IResponse<T> {
   res: Response;
   status: HttpStatusCode;
   data?: T;
+  errors?: T;
 }
 
 export class BaseController {
-  ok<T>({ res, data, status }: IResponse<T>): void {
-    if (data === undefined && status !== undefined) {
+  response<T>({ res, data, errors, status }: IResponse<T>): void {
+    if (data === undefined && errors === undefined && status !== undefined) {
       res.status(status);
       res.send();
     } else {
+      const value = data ?? errors;
       res.status(status);
-      res.json({ data });
+      res.json({ value });
     }
   }
 }

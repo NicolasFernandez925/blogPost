@@ -30,7 +30,7 @@ export class AuthController extends BaseController {
       const token = await this.service.login({ email, password });
       res.status(200).json({ token });
 
-      this.ok<string>({ res, status: HttpStatusCode.OK, data: token });
+      this.response<string>({ res, status: HttpStatusCode.OK, data: token });
     } catch (e) {
       next(e);
     }
@@ -43,7 +43,7 @@ export class AuthController extends BaseController {
       const user: IResponseRegister = await this.service.register({ email, password, name });
       res.status(200).json({ user: this.mapper.toDto(user.userCreated), token: user.token });
 
-      this.ok<IRegisterDTO>({
+      this.response<IRegisterDTO>({
         res,
         status: HttpStatusCode.OK,
         data: { user: this.mapper.toDto(user.userCreated), token: user.token }

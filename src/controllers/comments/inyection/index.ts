@@ -6,6 +6,7 @@ import { CommentController } from '../CommentController';
 import { CommentRepositoryToken, ICommentServiceToken, CommentMapperToken } from './inyection';
 
 const providers = [
+  // example : when the token provided in the "provide" key is called, the class provided in the "class" key is injected
   { provide: ICommentServiceToken, useClass: CommentService },
   { provide: CommentRepositoryToken, useClass: CommentRepository },
   { provide: CommentMapperToken, useClass: CommentMapper },

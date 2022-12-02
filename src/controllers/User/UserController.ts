@@ -19,7 +19,7 @@ export class UserController extends BaseController {
     try {
       const users = await this.service.getAll();
 
-      this.ok<IUserDTO[]>({ res, status: HttpStatusCode.OK, data: this.mapper.collectionOfDto(users) });
+      this.response<IUserDTO[]>({ res, status: HttpStatusCode.OK, data: this.mapper.collectionOfDto(users) });
     } catch (error) {
       next(error);
     }
@@ -34,7 +34,7 @@ export class UserController extends BaseController {
         throw new Error('the user was not found ');
       }
 
-      this.ok<IUserDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(user) });
+      this.response<IUserDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(user) });
     } catch (error) {
       next(error);
     }

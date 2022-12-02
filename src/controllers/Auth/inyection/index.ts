@@ -6,6 +6,7 @@ import { AuthMapper } from '../mappers/AuthMapper';
 import { AuthMapperToken, AuthRepositoryToken, IAuthServiceToken } from './inyection.tokens';
 
 const providersAuth = [
+  // example : when the token provided in the "provide" key is called, the class provided in the "class" key is injected
   { provide: IAuthServiceToken, useClass: AuthService },
   { provide: AuthRepositoryToken, useClass: AuthRepository },
   { provide: AuthMapperToken, useClass: AuthMapper },

@@ -25,7 +25,7 @@ export class CommentController extends BaseController {
 
     try {
       const commentCreated = await this.service.create({ post_id, comment, user_id });
-      this.ok<ICommentDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(commentCreated) });
+      this.response<ICommentDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(commentCreated) });
     } catch (e) {
       next(e);
     }
@@ -36,7 +36,7 @@ export class CommentController extends BaseController {
 
     try {
       const commentUpdated = await this.service.update({ id, comment });
-      this.ok<ICommentDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(commentUpdated) });
+      this.response<ICommentDTO>({ res, status: HttpStatusCode.OK, data: this.mapper.toDto(commentUpdated) });
     } catch (e) {
       next(e);
     }
@@ -47,20 +47,9 @@ export class CommentController extends BaseController {
 
     try {
       await this.service.delete(Number(id));
-      this.ok({ res, status: HttpStatusCode.NO_CONTENT });
+      this.response({ res, status: HttpStatusCode.NO_CONTENT });
     } catch (e) {
       next(e);
     }
   }
-
-  /*   public async findAllById(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { id } = req.params;
-
-    try {
-      const comments = await this.service.findAllById(Number(id));
-      this.ok<ICommentDTO[]>({ res, status: HttpStatusCode.OK, data: this.mapper.collectionOfDto(comments) });
-    } catch (e) {
-      next(e);
-    }
-  } */
 }

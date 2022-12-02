@@ -25,7 +25,7 @@ export class AuthMiddleware extends BaseController implements IMiddleware {
     const splitToken = token?.split(' ')[1];
 
     if (!splitToken) {
-      this.ok({ res, status: HttpStatusCode.UNAUTHORIZED, data: 'Unauthorized' });
+      this.response({ res, status: HttpStatusCode.UNAUTHORIZED, data: 'Unauthorized' });
       return;
     }
 
@@ -34,7 +34,7 @@ export class AuthMiddleware extends BaseController implements IMiddleware {
       _req.user = user.dataValues.id;
       next();
     } catch (e) {
-      this.ok({ res, status: HttpStatusCode.UNAUTHORIZED, data: 'Unauthorized' });
+      this.response({ res, status: HttpStatusCode.UNAUTHORIZED, data: 'Unauthorized' });
     }
   }
 }
