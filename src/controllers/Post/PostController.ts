@@ -5,11 +5,12 @@ import { BaseController } from '../BaseController';
 import { IPostDTO } from 'controllers/Post/dtos/interface/IPostDTO';
 import { IPostService } from 'services/Post/IPostService';
 import { ICustomRequest } from 'middelwares/auth/AuthMiddelware';
-import { IPostServiceToken, IValidatorToken, PostMapperToken } from './inyection/inyection.tokens';
+import { IPostServiceToken, PostMapperToken } from './inyection/inyection.tokens';
 import HttpStatusCode from 'utils/HttpStatusCode';
 import { IValidator } from 'validator/IValidator';
 import { IResponseValidator } from 'validator/Validator';
 import { CustomError } from 'error/BaseError';
+import { IValidatorToken } from 'validator/injection';
 
 export class PostController extends BaseController {
   constructor(

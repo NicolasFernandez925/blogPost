@@ -30,7 +30,10 @@ export class AuthMiddleware extends BaseController implements IMiddleware {
       _req.user = user!.dataValues.id as number;
       next();
     } catch (error: any) {
-      this.responseUnauthorized(res);
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        status_code: HttpStatusCode.UNAUTHORIZED,
+        message: error.message
+      });
     }
   }
 }
